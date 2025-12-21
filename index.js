@@ -4,6 +4,7 @@ import connectDb from "./config/db.js"
 import authRouter from './routes/authRoutes.js'
 import adminRouter from './routes/adminRoutes.js'
 import cookieParser from 'cookie-parser'
+import clientRouter from './routes/clientRoutes.js'
 
 const PORT = process.env.PORT
 
@@ -19,6 +20,7 @@ connectDb()
 
 app.use('/auth', authRouter)
 app.use('/admin', adminRouter)
+app.use('/', clientRouter)
 
 app.listen(PORT, (err) => {
     console.log(`Server is running at http://localhost:${PORT}`)
