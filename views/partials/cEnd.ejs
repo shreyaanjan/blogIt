@@ -1,0 +1,93 @@
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    const blogs = [
+        {
+            id: 101,
+            name: "Rise of Quantum Computing",
+            tags: "Technology",
+            createdAt: "Oct 24, 2025",
+            file: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=crop&q=80&w=600",
+            desc: "Quantum computing leverages the principles of quantum mechanics to process information in ways classical computers cannot. While classical bits are 0 or 1, qubits can be both simultaneously (superposition). This allows for exponential processing power in specific tasks like cryptography and material science."
+        },
+        {
+            id: 102,
+            name: "Minimalism in Web Design",
+            tags: "Lifestyle",
+            createdAt: "Oct 22, 2025",
+            file: "https://images.unsplash.com/photo-1489875347897-49f64b51c1f8?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+            desc: "Minimalism isn't just about removing elements; it's about adding focus. By stripping away the non-essential, we guide the user's eye to what truly matters. We discuss the balance between aesthetic appeal and functional clarity."
+        },
+        {
+            id: 103,
+            name: "Bootstrap 5 vs Tailwind CSS",
+            tags: "Technology",
+            createdAt: "Oct 20, 2025",
+            file: "https://images.unsplash.com/photo-1555099962-4199c345e5dd?auto=format&fit=crop&q=80&w=600",
+            desc: "Bootstrap offers rapid prototyping with pre-built components, making it ideal for standard layouts. Tailwind offers utility-first classes for high customizability. Your choice depends on whether you want 'done-for-you' components or complete creative control."
+        }
+    ];
+
+    const gridContainer = document.getElementById('blog-grid');
+    gridContainer.innerHTML = blogs.map(blog => {
+        const shortDesc =
+            blog.desc.length > 120 ? blog.desc.slice(0, 180) : blog.desc;
+
+        return `
+    <div class="col-md-4">
+      <div class="card hover-card">
+        <img src="${blog.file}" class="blog-img" alt="${blog.name}">
+        <div class="card-body d-flex flex-column">
+          <div class="mb-2">
+            ${blog.tags
+                .split(',')
+                .map(
+                    tag => `
+                <span class="badge bg-primary bg-opacity-10 text-primary">
+                  ${tag.trim()}
+                </span>`
+                )
+                .join('')}
+            <span class="text-muted small ms-2">
+              ${new Date(blog.createdAt).toDateString()}
+            </span>
+          </div>
+          <h5 class="card-title fw-bold">
+            ${blog.name}
+          </h5>
+          <p class="card-text text-secondary small blog-desc"
+             data-full="${blog.desc}">
+            ${shortDesc}
+          </p>
+          <button class="btn btn-outline-dark rounded-pill mt-auto w-100 read-toggle">
+            Read More <i class="fa-solid fa-arrow-down ms-1"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  `;
+    }).join("");
+
+    document.querySelectorAll(".read-toggle").forEach(btn => {
+        btn.addEventListener("click", function () {
+            const desc = this.closest(".card").querySelector(".blog-desc");
+            const fullText = desc.dataset.full;
+
+            if (this.innerText.includes("Read More")) {
+                desc.classList.add("expanded");
+                desc.innerText = fullText;
+                this.innerHTML = 'Show Less <i class="fa-solid fa-arrow-up ms-1"></i>';
+            } else {
+                desc.classList.remove("expanded");
+                desc.innerText =
+                    fullText.length > 180
+                        ? fullText.slice(0, 180)
+                        : fullText;
+                this.innerHTML = 'Read More <i class="fa-solid fa-arrow-down ms-1"></i>';
+            }
+        });
+    });
+</script>
+</body>
+
+</html>

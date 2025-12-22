@@ -9,12 +9,8 @@
 <script>
   document.querySelectorAll(".read-toggle").forEach(btn => {
     btn.addEventListener("click", function () {
-      const desc = this
-        .closest(".card")
-        .querySelector(".blog-desc");
-
+      const desc = this.closest(".card").querySelector(".blog-desc");
       const fullText = desc.dataset.full;
-
       if (this.innerText === "Read More") {
         desc.innerText = fullText;
         this.innerText = "Show Less";

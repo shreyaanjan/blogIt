@@ -1,6 +1,11 @@
-const getClientPage = (req, res) => {
+import Blog from "../models/BlogModel.js";
+
+const getClientPage = async (req, res) => {
     try {
-        return res.render('home')
+        const blogs = await Blog.find({})
+        return res.render('home', {
+            blogs
+        })
     } catch (error) {
         console.log(error);
     }
