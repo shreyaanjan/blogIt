@@ -5,7 +5,7 @@ import upload from "../middleware/multer.js"
 const router = express.Router()
 
 router.get('/', isLogin, getAdminPage)
-router.get('/add-blog', getBlogForm)
+router.get('/add-blog', isLogin, getBlogForm)
 router.post('/add-blog', upload.single('file'), addBlog)
 router.get('/delete-blog/:id', deleteBlog)
 router.get('/edit-blog/:id', editBlog)

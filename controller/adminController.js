@@ -27,8 +27,12 @@ const getBlogForm = (req, res) => {
 
 const addBlog = async (req, res) => {
     try {
+        if (!req.body.name || !req.body.desc || !req.body.tags || !req.file) {
+            return res.send("All fields are required");
+        }
         const data = req.body
         const doc = req.file.path
+
         const blog = {
             ...data, file: doc
         }
@@ -75,6 +79,10 @@ const updateBlog = async (req, res) => {
         const { id } = req.params
         const blog = await Blog.findById(id)
         const updatedData = req.body
+
+        if (!updatedData.name || !updatedData.desc || !updatedData.tags) {
+            return res.send("All fields are required")
+        }
 
         if (req.file) {
             const oldImgPath = path.join(directoryName, "..", blog.file)
